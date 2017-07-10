@@ -6,9 +6,7 @@ This is a utility, not a plugin. It does not act on files or streams nor does it
 
 ## Why?
 
-To take advantage of a helpful feature from Gulp 4.x without waiting for it to be released or upgrading from 3.x to 4.x.
-
-The original intent is to provide a value that can be used for filtering.
+To take advantage of a helpful feature from Gulp 4.x without waiting for it to be released or upgrading from 3.x to 4.x. The original intent is to provide a timestamp value that can be used for filtering.
 
 ## Installation
 
