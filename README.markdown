@@ -18,7 +18,7 @@ npm install --save-dev gulp3-last-run
 
 ## Usage
 
-Use **Gulp 3 Last Run** in combination with [**gulp-filter-since**](https://github.com/npetruzzelli/gulp-filter-since).
+Use **Gulp 3 Last Run** in combination with [**gulp-filter-since**](https://github.com/npetruzzelli/gulp-filter-since):
 
 ```javascript
 const gulp = require('gulp');
@@ -32,6 +32,31 @@ gulp.task('scripts', function(){
   const lastRunMs = taskLastRun.retrieveThenCapture('scripts');
   return gulp.src('app/scripts/**/*.js')
     .pipe($.filterSince(lastRunMs))
+    .pipe($.babel())
+    .pipe(gulp.dest('dist/scripts'))
+  ;
+});
+
+gulp.task('watch', ['scripts'], function(){
+  gulp.watch('app/scripts/**/*.js', ['scripts']);
+});
+```
+
+or, use it in combination with [**vinyl-filter-since**](https://github.com/tunnckocore/vinyl-filter-since) and [**gulp-if**](https://github.com/robrich/gulp-if):
+
+```javascript
+const gulp = require('gulp');
+const gulp3LastRun = require('gulp3-last-run');
+const gulpLoadPlugins = require('gulp-load-plugins');
+const vinylFilterSince = require('vinyl-filter-since');
+
+const $ = gulpLoadPlugins();
+const taskLastRun = gulp3LastRun(gulp);
+
+gulp.task('scripts', function(){
+  const lastRunMs = taskLastRun.retrieveThenCapture('scripts');
+  return gulp.src('app/scripts/**/*.js')
+    .pipe($.if(!!lastRunMs, vinylFilterSince(lastRunMs)))
     .pipe($.babel())
     .pipe(gulp.dest('dist/scripts'))
   ;
