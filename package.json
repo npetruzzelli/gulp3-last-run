@@ -1,6 +1,6 @@
 {
   "name": "gulp3-last-run",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "description": "An implementation of Gulp 4.x's `lastRun` method for Gulp 3.x.",
   "main": "lib/index.js",
   "directories": {
