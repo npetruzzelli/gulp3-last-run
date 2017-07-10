@@ -67,30 +67,63 @@ gulp.task('watch', ['scripts'], function(){
 });
 ```
 
-## Methods
+## API
 
-### `gulp3LastRun(gulpInstance)`
+### gulp3LastRun(gulpInstance)
 
 Returns a plain object containing static methods that act on a reference to a gulp object to get and set last run times. It is basically a wrapper for the [**last-run**](https://github.com/gulpjs/last-run) module.
 
-### `taskLastRun.retrieveThenCapture(taskName, options)`
+#### gulpInstance
+
+Type: `Object`
+
+A reference to the `gulp` module.
+
+### taskLastRun.retrieveThenCapture(taskName[, options])
 
 `retrieveThenCapture` is a convenience method not found in the last-run module. It executes the `retrieve` method then the `capture` method with a single method call.
 
-The `taskName` is a string that is used to retrieve the task function from the gulp instance. The task function is then used as the `fn` argument for last-run module method arguments.
-
-1.  Retrieves the current last run for a given task 
+1.  Retrieves the current last run for a given task, as a number representing milliseconds.
 2.  Immediately captures a new last run time
-3.  Returns the retrieved last run value (whatever it was before the capture)
+3.  Returns the retrieved last run value (whatever it was before the capture). Returns undefined if the task function has not been previously captured.
 
-Options for each method can be provided as option and will be passed to their respective methods if provided.
+#### taskName
 
--   `options.retrieveTimeResolution`
--   `options.captureTimestamp`
+Type: `String`
 
-### `taskLastRun.capture(taskName, timestamp)`, `taskLastRun.release(taskName)`, and `taskLastRun.retrieve(taskName, timeResolution)`
+A string that is used to retrieve the task function from the gulp instance. The task function is then used as the `fn` argument for last-run module method arguments.
 
-The `taskName` is a string that is used to retrieve the task function from the gulp instance. The task function is then used as the `fn` argument for last-run module method arguments.
+#### options
+
+Type: `Object`
+
+Options for each method can be provided as option and will be passed to their respective last-run methods if provided.
+
+##### options.retrieveTimeResolution
+
+Type: `Number`
+
+> Assuming `lastRun(fn)` returns 1426000001111, `lastRun(fn, 1000)` returns 1426000001000.
+>
+> _Source: [lastRun(fn, [timeResolution]) => [Timestamp]](https://github.com/gulpjs/last-run#lastrunfn-timeresolution--timestamp)_
+
+##### options.captureTimestamp
+
+Type: `Number`
+
+> If passed the optional timestamp, captures that time instead of `Date.now()`. The captured timestamp can then be retrieved using the `lastRun` function.
+> 
+> _Source: [lastRun.capture(fn, [timestamp])](https://github.com/gulpjs/last-run#lastruncapturefn-timestamp)_
+
+### taskLastRun.capture(taskName[, timestamp]), <br>taskLastRun.release(taskName), and <br>taskLastRun.retrieve(taskName[, timeResolution])
+
+#### taskName
+
+Type: `String`
+
+A string that is used to retrieve the task function from the gulp instance. The task function is then used as the `fn` argument for last-run module method arguments.
+
+#### (other arguments)
 
 Other arguments are passed directly to their last-run module counterparts. gulp3-last-run's `retrieve` method is the counter part for last-run's main method.
 
